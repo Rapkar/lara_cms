@@ -14,11 +14,13 @@ class Controller extends BaseController
     
     public function index(){
       if(Auth::check()){
-        $user=Auth::user();
-     return view('admin.index')->with(compact('user'));
+        $user= Auth::user();
+        
+     return view('admin/index',compact('user'))->with('title','Dashoard');
       }
       else{
         echo "<b> No login </b><a href='auth'>please click here  for Login</a>";
+       
       }
      
     }
