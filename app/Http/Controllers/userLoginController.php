@@ -21,21 +21,24 @@ class userLoginController extends Controller
   
       }
       public function registerform(request $request){
-       
-       
-            
-            $register_data=array(
+
+        $register_data=array(
             'name'=> $request->input('name'),
             'email'=> $request->input('email'),
-            'password'=> Hash::make($request->input('password'))
-        );
-        
+            'password'=> Hash::make($request->input('password')) );
+
+
+       if(is_null($request->input('terms'))){
+        return redirect()->route('auth_user')->with('success','PLase check term!');
+       }else{
             $update= DB::table('users')->insert($register_data);
-            var_dump($update);
             if(!$update){
-                return back();
+                return redirect()->route('auth_user')->with('success','PLease try again!'); 
             }
-            return redirect()->route('auth_user');
+            $user=DB::table('users')->select(['*']);
+             return redirect()->route('auth_user')->with('success','Register Ok , PLease Login to panel');
+        }
+         
       }
 
 //Login User
@@ -81,20 +84,21 @@ class userLoginController extends Controller
     }
     public function handleProviderCallback()
     {
-        $user_social = Socialite::driver('google')->stateless()->user();
-        $user = User::whereEmail($user_social->getEmail())->first();
+         $user_social = Socialite::driver('google')->stateless()->user();
+         $user = User::whereEmail($user_social->getEmail())->first();
         if( ! $user)
         {
             $user = User::create([
                 'name' => $user_social->getName(),
                 'email' => $user_social->getEmail(),
-                'password' => bcrypt($user_social->getId())
+                'password' => bcrypt($user_social->getId()),
+                'image' => $user_social->getAvatar()
 
             ]);
         }
         auth()->loginUsingId($user->id);
-        return redirect('/');
-
+        emotify('success', 'Hello You have successfully logged in to your account :) !');
+          return redirect('/');
     }
 }
 

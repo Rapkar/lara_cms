@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\categories;
+use App\posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class userPostsController extends Controller
 {
@@ -14,12 +17,12 @@ class userPostsController extends Controller
      */
     public function index()
     {
-       $posts= "";
+        $posts= posts::count();
        $user= Auth::user();
+       
        if(empty($posts)) { return view('admin/blank',compact('user'))->with('title','Posts Empty');} 
        else{return view('admin/posts');}
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -27,10 +30,18 @@ class userPostsController extends Controller
      */
     public function create()
     {
-        $posts= "1";
+        $posts= posts::count();
         $user= Auth::user();
-        if(empty($posts)) { return view('admin/blank',compact('user'))->with('title','Posts Empty');} 
-        else{return view('admin/postcreate',compact('user'))->with('title','Create New Post');}
+        $categories = categories::with('parent')->whereNull('parent_id')->get();
+        $subcategories = categories::with('parent')->whereNotNull('parent_id')->get();
+        if(empty($posts)) { 
+            notify()->info('Great post! Write it down and post it :) !');
+            return view('admin/blank',compact('user',))->with('title','Posts Empty');
+        } 
+        else{
+
+          notify()->info('Great post! Write it down and post it :) !');
+            return view('admin/postcreate',compact('user','categories','subcategories'))->with('title','Create New Post');}
     }
 
     /**
@@ -41,9 +52,18 @@ class userPostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $user= Auth::user();
+        var_dump($request->input());   
+        // var_dump($user['email']);   
+        $post = posts::create([
+            'post_title' => $request['post_title'],
+            'post_content' =>$request['post_content'],
+            'post_status' =>$request['post_status'],
+            'cat_title' =>$request['cat_title'],
+            'post_author' =>$user['email'],
 
+        ]);
+    }
     /**
      * Display the specified resource.
      *
@@ -63,10 +83,15 @@ class userPostsController extends Controller
      */
     public function edit($id)
     {
-        $posts= "";
+        $posts= posts::count();
         $user= Auth::user();
-        if(empty($posts)) { return view('admin/blank',compact('user'))->with('title','Posts Empty');} 
-        else{return view('admin/postsedit');}
+        if(empty($posts)) {
+            emotify('success', 'Hello You have successfully logged in to your account :) !');
+            return view('admin/blank',compact('user'))->with('title','Posts Empty');} 
+        else{
+            emotify('success', 'Hello You have successfully logged in to your account :) !');
+            return view('admin/postsedit');
+        }
     }
 
     /**
@@ -78,7 +103,9 @@ class userPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $posts= posts::count();
+        $user= Auth::user();
+        
     }
 
     /**
@@ -89,13 +116,43 @@ class userPostsController extends Controller
      */
     public function destroy($id)
     {
-        $posts= "";
+        $posts= posts::count();
         $user= Auth::user();
-        if(empty($posts)) { return view('admin/blank',compact('user'))->with('title','Posts Empty');} 
-        else{return view('admin/postsselete');}
+        if(empty($posts)) {
+            emotify('success', 'Hello You have successfully logged in to your account :) !');
+             return view('admin/blank',compact('user'))->with('title','Posts Empty');} 
+        else{
+            $item=DB::table('posts')->where('id',$id)->delete();
+            $items=DB::table('posts')->where('post_author',$user->email)->get();
+            if($item)
+            {
+                emotify('success', 'Delete your post :) !');
+                return view('admin/postlist',compact('items','user'));
+            }
+            }
+            emotify('Error', ' your request Dot process :( !');
+            return view('admin/postlist',compact('items','user'));
     }
     public function postlist(){
         $user= Auth::user();
-        return view('admin/postlist',compact('user'))->with('title','Post LList');
+        $posts=posts::count();
+        $items=DB::table('posts')->where('post_author',$user->email)->get();
+       
+        if(empty($posts)){
+            emotify('success', 'Sorry, you did not create any posts :( !');
+            return view('admin/blank',compact('user'))->with('title','Posts Empty');}
+        else{
+            emotify('success', ' You can delete or edit your own posts :) !');
+            return view('admin/postlist', compact('user','items'))->with('title', 'Post List');
+        }
     }
+    public function postedit($id){
+        $user= Auth::user();
+        $items=DB::table('posts')->where('id',$id)->get();
+  foreach ($items as $item) {
+    $item=$item;
+    }
+        return view('admin/postedit',compact('user','item'))->with('title','Post Edit');
+    }
+    
 }

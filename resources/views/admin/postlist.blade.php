@@ -1,9 +1,10 @@
 @extends('admin.index')
 @section('content')
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <div class="card">
+    <div class="card" style="display: contents;">
         <div class="card-header">
           <h3 class="card-title">Bordered Table</h3>
         </div>
@@ -13,7 +14,7 @@
             <thead>                  
               <tr>
                 <th style="width: 10px">#</th>
-                <th>PostName</th>
+                <th>Post Name</th>
                 <th>Popularity</th>
                 <th style="width: 40px">View</th>
                 <th style="width: 40px">Delete</th>
@@ -22,33 +23,34 @@
                 <th style="width: 40px">Likes</th>
               </tr>
             </thead>
+            @foreach ($items as $item)
             <tbody>
               <tr>
-                <td>1.</td>
-                <td>Update software</td>
+                <td>{{$item->id}}.</td>
+                <td>{{$item->post_title}}</td>
                 <td>
                   <div class="progress progress-xs">
                     <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
                   </div>
                 </td>
               <td><a class="btn btn-app">
-                    <span class="badge bg-purple">891</span>
+                    <span class="badge bg-purple">{{$item->post_views}}</span>
                     <i class="fas fa-users"></i> Users
                   </a></td>
-                <td><a class="btn btn-app">
+                <td><a class="btn btn-app" href="{{route('postsdelete',$item->id)}}">
                     <i class="fas fa-trash"></i> Delete
                   </a></td>
-                <td><a class="btn btn-app">
+                <td><a class="btn btn-app" href="{{route('postedit',$item->id)}}">
                     <i class="fas fa-edit"></i> Edit
                   </a></td>
-                <td><a class="btn btn-app">
-                    <span class="badge bg-info">12</span>
+                <td><a class="btn btn-app" href="{{$item->id}}">
+                    <span class="badge bg-info">{{$item->comment_count}}</span>
                     <i class="fas fa-envelope"></i> Inbox</a></td>
                 <td><a class="btn btn-app">
-                    <span class="badge bg-danger">531</span>
+                    <span class="badge bg-danger">{{$item->post_Likes}}</span>
                     <i class="fas fa-heart"></i> Likes  </a></td>
               </tr>
-              <tr>
+              {{-- <tr>
                 <td>2.</td>
                 <td>Clean database</td>
                 <td>
@@ -129,8 +131,9 @@
                     <span class="badge bg-danger">531</span>
                     <i class="fas fa-heart"></i> Likes
                   </a></td>
-              </tr>
+              </tr> --}}
             </tbody>
+            @endforeach
           </table>
         </div>
         <!-- /.card-body -->

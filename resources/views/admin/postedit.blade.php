@@ -1,5 +1,6 @@
 @extends('admin.index')
 @section('content')
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -41,43 +42,31 @@
               </div>
               <!-- /. tools -->
             </div>
-    
             <!-- /.card-header -->
             <div class="card-body pad">
             <form method="POST" >
               {{ csrf_field() }}
                 <div class="row">
                     <div class="col-3">
-                      <input type="text" name="post_title" class="form-control" placeholder="Please Enter Your Post Name">
+                      <input type="text" name="post_title" class="form-control" placeholder="Please Enter Your Post Name" value="{{$item->post_title}}">
                     </div>
                     <div class="col-4">
-
-
                         <select name="category_id" class="custom-select">
-                    @if (!empty($categories))
-                      <option value="0">Not parent</option>
-                       @foreach($categories as $category)
-                       <option value="{{$category->id}}"> {{ $category->cat_slug }}</option>
-                       @foreach($subcategories as $subcategory)
-                       @if ($subcategory->parent_id == $category->id)
-               
-                        <option value="{{$subcategory->id}}"> {{ $subcategory->cat_slug }}</option>
-               
-                         @endif
-                           @endforeach
-                    
-                      @endforeach
-                      @else
-                      <option>Not Exist</option>
-                      @endif
+                            <option>Post Category</option>
+                            <option>Post Category</option>
+                            <option>Post Category</option>
+                            <option>Post Category</option>
+                            <option>Post Category</option>
                           </select> </div>
                     <div class="col-5">
                         <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                            <input type="checkbox" name="post_status"  class="custom-control-input" id="customSwitch3">
+                    
+                         <input type="checkbox" name="post_status"{{($item->post_status) ? 'checked' : '' }}  class="custom-control-input" id="customSwitch3">
+
                             <label class="custom-control-label" for="customSwitch3">ShowPosts</label>
                           </div>
                           <div class="custom-control custom-switch">
-                            <input type="checkbox" name="comment_status" class="custom-control-input" id="customSwitch1">
+                            <input type="checkbox" name="comment_status"{{($item->post_status) ? 'checked' : '' }}  class="custom-control-input" id="customSwitch1">
                             <label class="custom-control-label" for="customSwitch1">ShowComments</label>
                           </div>
                     </div>
@@ -85,7 +74,7 @@
                 <hr>
               <div class="mb-3">
                 <textarea class="textarea"  name="post_content"placeholder="Place some text here"
-                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"  >{{$item->post_content}}</textarea>
               </div>
               <p class="text-sm mb-0">
                 the writer: <a href="https://github.com/summernote/summernote">{{$user->name}}.</a>

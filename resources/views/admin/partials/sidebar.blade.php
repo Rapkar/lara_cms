@@ -12,7 +12,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="{{$user->image}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{$user->name}}</a>
@@ -214,18 +214,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('posts')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Post Edit</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/forms/editors.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Posts Delete</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="{{route('postslist')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Posts List</p>
@@ -237,27 +225,21 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>
-                Tables
+                Category
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/tables/simple.html" class="nav-link">
+              <a href="{{route('categorycreate')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
+                  <p>Category Create</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="pages/tables/data.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>DataTables</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/tables/jsgrid.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>jsGrid</p>
+                  <p>Category list</p>
                 </a>
               </li>
             </ul>

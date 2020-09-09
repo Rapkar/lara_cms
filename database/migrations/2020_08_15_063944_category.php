@@ -16,7 +16,10 @@ class Category extends Migration
         Schema::create('category', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('cat_title');
-            $table->longText('post_id');
+            $table->string('cat_slug');
+            $table->int('parent_id');
+            $table->text('cat_description ');
+            $table->int('user_id');
             $table->rememberToken();
             $table->timestamps();
         });

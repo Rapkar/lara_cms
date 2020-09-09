@@ -1,5 +1,7 @@
 @include('admin.partials.header')
 <body class="hold-transition sidebar-mini layout-fixed">
+  @include('notify::messages')
+  @notifyJs
 @include('admin.partials.menu',$user)
 @include('admin.partials.sidebar',$user)
 @yield('content')

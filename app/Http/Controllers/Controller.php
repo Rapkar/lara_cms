@@ -31,7 +31,4 @@ class Controller extends BaseController
       $delete=DB::table('users')->where('id','=',$id)->delete();
       return view('admin/index',$delete)->with('success','Delete Success');
     }
-
-  
-
 }

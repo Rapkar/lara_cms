@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38adb99802f881d5dc58820e5bbd1c90",
+    "content-hash": "849b21688bb1ed5ac096649bb6ea2532",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1314,6 +1314,68 @@
                 "twitter"
             ],
             "time": "2016-08-17T00:36:58+00:00"
+        },
+        {
+            "name": "mckenziearts/laravel-notify",
+            "version": "v2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mckenziearts/laravel-notify.git",
+                "reference": "f6704404182dc4d4c1ceb4897d46e1f8d155a8b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mckenziearts/laravel-notify/zipball/f6704404182dc4d4c1ceb4897d46e1f8d155a8b4",
+                "reference": "f6704404182dc4d4c1ceb4897d46e1f8d155a8b4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~7.0",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mckenziearts\\Notify\\LaravelNotifyServiceProvider"
+                    ],
+                    "aliases": {
+                        "Notify": "Mckenziearts\\Notify\\Facades\\LaravelNotify"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mckenziearts\\Notify\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arthur Monney",
+                    "email": "monneylobe@gmail.com",
+                    "homepage": "https://twitter.com/MonneyArthur",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Flexible flash notifications for Laravel",
+            "homepage": "https://github.com/mckenziearts/laravel-notify",
+            "keywords": [
+                "laravel",
+                "laravel-notify",
+                "notification"
+            ],
+            "time": "2020-08-24T03:47:59+00:00"
         },
         {
             "name": "monolog/monolog",

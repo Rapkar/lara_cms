@@ -17,11 +17,11 @@ class Posts extends Migration
             $table->id()->autoIncrement();
             $table->string('post_title');
             $table->longText('post_content');
-            $table->integer('post_views');
-            $table->integer('post_Likes');
+            $table->integer('post_views')->nullable();
+            $table->integer('post_Likes')->nullable();
             $table->string('post_author');
             $table->string('post_status');
-            $table->bigInteger('comment_count');
+            $table->bigInteger('comment_count')->nullable();
             $table->string('comment_status');
             $table->integer('category_id');
             $table->timestamp('post_time');

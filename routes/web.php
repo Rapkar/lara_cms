@@ -56,9 +56,16 @@ Route::get('auth/google/callback', 'userLoginController@handleProviderCallback')
 //******************************//
 Route::get('posts', 'userPostsController@index')->name('posts');
 Route::get('postscreate', 'userPostsController@create')->name('postscreate');
+Route::post('postscreate', 'userPostsController@store');
 Route::get('postsedit', 'userPostsController@edit')->name('postsedit');
-Route::get('postsdelete', 'userPostsController@delete')->name('postsdelete');
+Route::get('postsedit{id}', 'userPostsController@postedit')->name('postedit');
+Route::post('postsedit{id}', 'userPostsController@update')->name('update');
+Route::get('postsdelete{id}', 'userPostsController@destroy')->name('postsdelete');
 Route::get('postlist', 'userPostsController@postlist')->name('postslist');
 //******************************//
 //EXTRA PAGES
+//category
+Route::get('categorycreate', 'Category@index')->name('categorycreate');
+Route::post('categorycreate', 'Category@store');
+//category
 
