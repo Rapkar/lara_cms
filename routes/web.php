@@ -12,46 +12,34 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-
-//AUTH USERS ROUTES
-
-
-    //******************************//
     Route::get('/', 'Controller@index');
-    Route::get('dashboard', 'Controller@index')->name('dashboard');
-    Route::get('delete/{id}', 'Controller@delete');
-
+    //LOGIN//
+    Route::get('auth','userLoginController@auth_user')->name('auth_user');
+    Route::post('auth', 'userLoginController@doLogin')->name('login_user');
+    //LOGIN//
     //SIGNUP//
     Route::get('register', 'userLoginController@register')->name('register_user_page');
     Route::post('register', 'userLoginController@registerform')->name('register_user');
     //SIGNUP//
-
-    //LOGIN//
-    Route::get('auth', 'userLoginController@auth_user')->name('auth_user');
-    Route::post('auth', 'userLoginController@doLogin')->name('login_user');
-    //LOGIN//
-
-    //FORGET PASSWORD//
-    Route::get('forgetpassword', 'userLoginController@forgetpassword')->name('forgetpassword');
-    Route::post('forgetpassword', 'userLoginController@doforgetpassword');
-    //FORGET PASSWORD//
-
-    //LOGOUT//
-    Route::get('logoutuser', 'userLoginController@logout')->name('logout_user');
-    //LOGOUT//
-
     //SOCHIAL LOGIN//
     Route::get('auth/google', 'userLoginController@redirectToProvider')->name('googleLogin');
     Route::get('auth/google/callback', 'userLoginController@handleProviderCallback');
     //SOCHIAL LOGIN//
+    //FORGET PASSWORD//
+    Route::get('forgetpassword', 'userLoginController@forgetpassword')->name('forgetpassword');
+        Route::post('forgetpassword', 'userLoginController@doforgetpassword');
+        //FORGET PASSWORD//
+//AUTH USERS ROUTES
+Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function()
+{
     //******************************//
-
-
+    Route::get('dashboard', 'Controller@index')->name('dashboard');
+    Route::get('delete/{id}', 'Controller@delete');
+    //LOGOUT//
+    Route::get('logoutuser', 'userLoginController@logout')->name('logout_user');
+    //LOGOUT/
+    //******************************//
     //AUTH USERS ROUTES
-
-
     //EXTRA PAGES
     //******************************//
     Route::get('posts', 'userPostsController@index')->name('posts');
@@ -69,3 +57,4 @@ use Illuminate\Support\Facades\Route;
     Route::post('categorycreate', 'Category@store');
     //category
 
+});

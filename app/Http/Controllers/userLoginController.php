@@ -45,6 +45,7 @@ class userLoginController extends Controller
 
     public function auth_user(){
             return view('admin/login')->with('title','LoginPage');
+           
     }
 
     public function doLogin(request $request){
